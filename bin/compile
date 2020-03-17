@@ -30,3 +30,20 @@ while read file; do
     echo "Location ${file} not found - ignoring"
   fi
 done <${CLEAN_FILES}
+
+set +euo pipefail
+shopt -s dotglob
+
+echo
+echo "Top-level directory sizes in slug after clean:"
+du -hs -c */ | sort -h
+
+echo
+echo "Top 10 largest directories:"
+du -xhS * | sort -rh | head -n 10
+
+echo
+echo "Top 25 largest files:"
+find * -type f -exec du -h {} + | sort -rh | head -n 25
+
+echo
